@@ -9,6 +9,7 @@ import com.example.android.dagger.registration.enterdetails.EnterDetailsFragment
 import com.example.android.dagger.registration.termsandconditions.TermsAndConditionsFragment
 import com.example.android.dagger.settings.SettingsActivity
 import com.example.android.dagger.splash.SplashActivity
+import com.example.android.dagger.splash.SplashComponent
 import com.example.android.dagger.user.UserComponent
 import com.example.android.dagger.user.UserManager
 import dagger.BindsInstance
@@ -29,5 +30,5 @@ interface AppComponent {
 
     fun loginComponent(): LoginComponent.Factory
     fun registrationComponent(): RegistrationComponent.Factory
-    fun inject(activity: SplashActivity)
+    fun splashComponent(): SplashComponent.Factory
 }

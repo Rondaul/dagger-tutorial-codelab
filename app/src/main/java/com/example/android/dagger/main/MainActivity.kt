@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         val userManager = (application as MyApplication).appComponent.userManager()
-        userManager.userComponent!!.inject(this)
+        userManager.userComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupViews()

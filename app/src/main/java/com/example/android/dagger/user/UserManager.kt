@@ -22,6 +22,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 private const val REGISTERED_USER = "registered_user"
+private const val LOGGEDIN_USER= "loggedin_user"
 private const val PASSWORD_SUFFIX = "password"
 
 /**
@@ -39,13 +40,12 @@ class UserManager @Inject constructor(
      *  is logged in or not, when the user logs in, a new instance will be created.
      *  When the user logs out, this will be null.
      */
-    var userComponent: UserComponent? = null
-        private set
+    var userComponent: UserComponent = userComponentFactory.create()
 
     val username: String
         get() = storage.getString(REGISTERED_USER)
 
-    fun isUserLoggedIn() = userComponent != null
+    fun isUserLoggedIn() = storage.getString(LOGGEDIN_USER).isNotEmpty()
 
     fun isUserRegistered() = storage.getString(REGISTERED_USER).isNotEmpty()
 
@@ -67,17 +67,18 @@ class UserManager @Inject constructor(
     }
 
     fun logout() {
-        userComponent = null
+        storage.setString(LOGGEDIN_USER, "")
     }
 
     fun unregister() {
         val username = storage.getString(REGISTERED_USER)
         storage.setString(REGISTERED_USER, "")
+        storage.setString(LOGGEDIN_USER, "")
         storage.setString("$username$PASSWORD_SUFFIX", "")
         logout()
     }
 
     private fun userJustLoggedIn() {
-        userComponent = userComponentFactory.create()
+        storage.setString(LOGGEDIN_USER , "true")
     }
 }

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.UserManager
 import androidx.lifecycle.Observer
+import androidx.test.espresso.idling.CountingIdlingResource
 import com.example.android.dagger.MyApplication
 import com.example.android.dagger.R
 import com.example.android.dagger.login.LoginActivity
@@ -18,10 +19,10 @@ class SplashActivity : AppCompatActivity() {
 
     @Inject
     lateinit var splashViewModel: SplashViewModel
-    val handler = Handler()
+    private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (application as MyApplication).appComponent.inject(this)
+        (application as MyApplication).appComponent.splashComponent().create().inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
